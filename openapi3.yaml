@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  title: AWS API Gateway Contract
+  version: 1.0.0
+paths:
+  /siglas:
+    get:
+      summary: Lista todas as siglas
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiglasList'
+        '401':
+          description: Não autorizado
+        '403':
+          description: Proibido
+        '500':
+          description: Erro interno do servidor
+        '503':
+          description: Serviço indisponível
+      x-amazon-apigateway-integration:
+        type: http_proxy
+        httpMethod: get
+        uri: <Sua_URL_Aqui>
+    post:
+      summary: Cria uma nova sigla
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sigla'
+      responses:
+        '201':
+          description: Sigla criada com sucesso
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '403':
+          description: Proibido
+        '500':
+          description: Erro interno do servidor
+        '503':
+          description: Serviço indisponível
+      x-amazon-apigateway-integration:
+        type: http_proxy
+        httpMethod: post
+        uri: <Sua_URL_Aqui>
+  /siglas/{siglaId}:
+    parameters:
+      - in: path
+        name: siglaId
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Retorna detalhes de uma sigla específica
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sigla'
+        '401':
+          description: Não autorizado
+        '403':
+          description: Proibido
+        '500':
+          description: Erro interno do servidor
+        '503':
+          description: Serviço indisponível
+      x-amazon-apigateway-integration:
+        type: http_proxy
+        httpMethod: get
+        uri: <Sua_URL_Aqui>
+    put:
+      summary: Atualiza uma sigla existente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sigla'
+      responses:
+        '200':
+          description: Sigla atualizada com sucesso
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '403':
+          description: Proibido
+        '500':
+          description: Erro interno do servidor
+        '503':
+          description: Serviço indisponível
+      x-amazon-apigateway-integration:
+        type: http_proxy
+        httpMethod: put
+        uri: <Sua_URL_Aqui>
+    delete:
+      summary: Remove uma sigla existente
+      responses:
+        '204':
+          description: Sigla removida com sucesso
+        '401':
+          description: Não autorizado
+        '403':
+          description: Proibido
+        '500':
+          description: Erro interno do servidor
+        '503':
+          description: Serviço indisponível
+      x-amazon-apigateway-integration:
+        type: http_proxy
+        httpMethod: delete
+        uri: <Sua_URL_Aqui>
+  /siglas/{siglaId}/microsservicosGovernados:
+    parameters:
+      - in: path
+        name: siglaId
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Lista os microsserviços governados por uma sigla específica
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicrosservicosList'
+        '401':
+          description: Não autorizado
+        '403':
+          description: Proibido
+        '500':
+          description: Erro interno do servidor
+        '503':
+          description: Serviço indisponível
+      x-amazon-apigateway-integration:
+        type: http_proxy
+        httpMethod: get
+        uri: <Sua_URL_Aqui>
+components:
+  schemas:
+    Sigla:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        descricao:
+          type: string
+      required:
+        - id
+        - nome
+    SiglasList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Sigla'
+    Microsservico:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        descricao:
+          type: string
+      required:
+        - id
+        - nome
+    MicrosservicosList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Microsservico'
